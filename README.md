@@ -1,5 +1,6 @@
-# game-show-app
- Techdegree Project 6 - Game Show App
+[Techdegree Project 6 - Game Show App](https://gracemarsh.github.io/game-show-app/)
+
+# Game Show app
 
 This is a browser version of “Wheel of Success”, a word guessing game where players will click letters from an onscreen keyboard to try to guess a random phrase.
 
