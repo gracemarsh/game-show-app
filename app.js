@@ -45,6 +45,7 @@ const addPhraseToDisplay = (arr) => {
     }
   });
 };
+ƒ;
 addPhraseToDisplay();
 
 /*
