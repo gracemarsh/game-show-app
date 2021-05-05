@@ -67,7 +67,7 @@ const checkLetter = (letterGuess) => {
 // const button = ??
 
 qwerty.addEventListener("click", (e) => {
-  const button = e.target;
+  const button = e.target; //make sure that it's just the button not everywhere on the div .. type?
   let buttonText = button.innerText;
 
   if (button.className !== "chosen") {
