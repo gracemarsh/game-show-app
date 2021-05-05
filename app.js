@@ -4,7 +4,7 @@ const resetBtn = document.getElementsByClassName("btn__reset")[0];
 const phrase = document.getElementById("phrase");
 const phrases = [
   "A blessing in disguise",
-  "Better late than never	",
+  "Better late than never",
   "Your guess is as good as mine",
   "The best of both worlds",
   "Like the moon I too have my phases",
@@ -12,7 +12,7 @@ const phrases = [
 const qwerty = document.getElementById("qwerty");
 let missed = 0;
 
-// reset game
+//listen for the start game button to be pressed
 resetBtn.addEventListener("click", (e) => {
   // e.preventDefault();
   resetBtn.style.display = "none";
@@ -28,13 +28,13 @@ const getRandomPhraseAsArray = (arr) => {
 const randomPhrase = getRandomPhraseAsArray(phrases);
 
 //adds the letters of a string to the display
+const phraseLetters = randomPhrase.split("");
+const ul = document.querySelector("#phrase ul");
 
 const addPhraseToDisplay = (arr) => {
-  let phraseLetters = randomPhrase.split("");
-  let ul = document.querySelector("#phrase ul");
   phraseLetters.forEach((letter) => {
-    console.log(letter);
-    let newLi = document.createElement("li");
+    // console.log(letter);
+    const newLi = document.createElement("li"); //how come I can't take newLi and make it a global var?
     newLi.textContent = letter;
     ul.appendChild(newLi);
 
@@ -45,22 +45,48 @@ const addPhraseToDisplay = (arr) => {
     }
   });
 };
-ƒ;
+
 addPhraseToDisplay();
 
-/*
+//check if a letter is in the phrase
+const checkLetter = (letterGuess) => {
+  let match = false;
+  let liArray = document.querySelectorAll(".letter");
 
+  for (let i = 0; i < liArray.length; i++) {
+    let hasMatch = liArray[i].textContent.toLowerCase() === letterGuess;
+    if (hasMatch) {
+      liArray[i].classList.add("show");
+      match = letterGuess;
+    }
+  }
+  return match;
+};
 
+//listen for the onscreen keyboard to be clicked
+// const button = ??
 
+qwerty.addEventListener("click", (e) => {
+  const button = e.target;
+  let buttonText = button.innerText;
 
+  if (button.className !== "chosen") {
+    button.classList.add("chosen");
+    let match = checkLetter(buttonText);
 
+    if (match === false) {
+      let hearts = document.getElementById("scoreboard");
 
-// check if a letter is in the phrase
-const checkLetter = (button) => {};
+      missed += 1;
+    }
+  }
+});
 
-//listen for the start game button to be pressed
-startButton.addEventListener("click", () => {});
+function displayScore(numberOfHeartsLeft) {
+  // get hearts
+  // hide all hearts
+  // display numberOfHeartsLeft in loop
+}
 
-//listen for the onscreen ekyboard to be clicked
-qwerty.addEventListener("click", (e) => {});
-*/
+//check if the game has been won or lost
+const checkWin = () => {};
