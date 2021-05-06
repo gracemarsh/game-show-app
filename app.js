@@ -75,8 +75,11 @@ qwerty.addEventListener("click", (e) => {
     let match = checkLetter(buttonText);
 
     if (match === false) {
+      alert("FALSE WRONG LETTER");
       let hearts = document.getElementById("scoreboard");
-
+      let ol = hearts.firstElementChild;
+      let li = ol.lastElementChild;
+      ol.removeChild(li);
       missed += 1;
     }
   }
