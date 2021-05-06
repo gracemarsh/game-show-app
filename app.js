@@ -75,21 +75,26 @@ qwerty.addEventListener("click", (e) => {
     let match = checkLetter(buttonText);
 
     if (match === false) {
-      alert("FALSE WRONG LETTER");
-      let hearts = document.getElementById("scoreboard");
-      let ol = hearts.firstElementChild;
-      let li = ol.lastElementChild;
-      ol.removeChild(li);
-      missed += 1;
+      displayScore(buttonText);
     }
   }
 });
 
-function displayScore(numberOfHeartsLeft) {
-  // get hearts
-  // hide all hearts
-  // display numberOfHeartsLeft in loop
+function displayScore(buttonText) {
+  alert(`The letter "${buttonText}" is incorrect, LOSE ONE HEART`);
+  let hearts = document.getElementById("scoreboard");
+  let ol = hearts.firstElementChild;
+  let li = ol.lastElementChild;
+  ol.removeChild(li);
+  missed += 1;
 }
 
 //check if the game has been won or lost
-const checkWin = () => {};
+const checkWin = () => {
+  if (missed === 5) {
+    overlay.classList.add("lose");
+    overlay.style.display = "block";
+  }
+  // else {
+  // }
+};
