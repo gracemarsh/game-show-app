@@ -67,14 +67,18 @@ const checkLetter = (letterGuess) => {
 // const button = ??
 
 qwerty.addEventListener("click", (e) => {
-  const button = e.target; //make sure that it's just the button not everywhere on the div .. type?
-  let buttonText = button.innerText;
-
-  if (button.className !== "chosen") {
-    button.classList.add("chosen");
+  const button = e.target;
+  const isValidButtonClick =
+    button.className !== "chosen" && button.nodeName === "BUTTON";
+  if (isValidButtonClick) {
+    let buttonText = button.innerText;
     let match = checkLetter(buttonText);
+    button.classList.add("chosen");
+    checkWin();
 
-    if (match === false) {
+    if (match) {
+      button.classList.add("correctButton");
+    } else {
       displayScore(buttonText);
     }
   }
@@ -90,11 +94,22 @@ function displayScore(buttonText) {
 }
 
 //check if the game has been won or lost
+
+const letter = document.querySelectorAll(".letter");
+
+//win is only happening one click after the actual win...
+//because it's based on qwerty click function
 const checkWin = () => {
+  let title = document.querySelector(".title");
+  const lettersShown = document.querySelectorAll(".show");
+  if (letter.length === lettersShown.length) {
+    overlay.classList.add("win");
+    overlay.style.display = "flex";
+    title.innerHTML = `<h2 class="title">CONGRATULATIONS! You've won!</h2>`;
+  }
   if (missed === 5) {
     overlay.classList.add("lose");
-    overlay.style.display = "block";
+    overlay.style.display = "flex";
+    title.innerHTML = `<h2 class="title">Sorry, you've lost.</h2>`;
   }
-  // else {
-  // }
 };
