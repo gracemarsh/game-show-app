@@ -1,31 +1,55 @@
-//try to keep variables in order that they appear in html
-const overlay = document.getElementById("overlay");
-const resetBtn = document.getElementsByClassName("btn__reset")[0];
-const phrase = document.getElementById("phrase");
-const phrases = [
-  "A BLESSING IN DISGUISE",
-  "BETTER LATE THAN NEVER",
-  "YOUR GUESS IS AS GOOD AS MINE",
-  "THE BEST OF BOTH WORLDS",
-  "LIKE THE MOON I TOO HAVE MY PHASES",
-];
-const qwerty = document.getElementById("qwerty");
-let missed = 0;
+// APP FLOW CONTENTS:
+// 0) SET UP
+// 1) START SCREEN
+// 2) GAME
+//  A) WIN
+//    I) RESTART => 2
+//  B) LOSE
+//    I) RESTART => 2
+
+// APP FLOW
+// 0) SET UP
+function setUp() {
+  window.app = {
+    overlay: document.getElementById("overlay"),
+    resetBtn: document.getElementsByClassName("btn__reset")[0],
+    phrase: document.getElementById("phrase"),
+    phrases: [
+      "A BLESSING IN DISGUISE",
+      "BETTER LATE THAN NEVER",
+      "YOUR GUESS IS AS GOOD AS MINE",
+      "THE BEST OF BOTH WORLDS",
+      "LIKE THE MOON I TOO HAVE MY PHASES",
+      "BLACK LIVES MATTER",
+    ],
+    qwerty: document.getElementById("qwerty"),
+    missed: 0,
+  };
+}
+
+setUp();
+
+// 1) START SCREEN
+// 2) GAME
+//  A) WIN
+//    I) RESTART => 2
+//  B) LOSE
+//    I) RESTART => 2
 
 //listen for the start game button to be pressed
-resetBtn.addEventListener("click", (e) => {
+app.resetBtn.addEventListener("click", (e) => {
   // e.preventDefault();
-  resetBtn.style.display = "none";
-  overlay.style.display = "none";
+  app.resetBtn.style.display = "none";
+  app.overlay.style.display = "none";
 });
 
 //return a random phrase from an array
 const getRandomPhraseAsArray = (arr) => {
-  const randomIndex = Math.floor(Math.random() * phrases.length);
+  const randomIndex = Math.floor(Math.random() * app.phrases.length);
   const randomPhrase = arr[randomIndex];
   return randomPhrase;
 };
-const randomPhrase = getRandomPhraseAsArray(phrases);
+const randomPhrase = getRandomPhraseAsArray(app.phrases);
 
 //adds the letters of a string to the display
 const phraseLetters = randomPhrase.split("");
@@ -65,7 +89,7 @@ const checkLetter = (letterGuess) => {
 //listen for the onscreen keyboard to be clicked
 // const button = ??
 
-qwerty.addEventListener("click", (e) => {
+app.qwerty.addEventListener("click", (e) => {
   const button = e.target;
   const isValidButtonClick =
     button.className !== "chosen" && button.nodeName === "BUTTON";
@@ -89,7 +113,7 @@ function displayScore(buttonText) {
   let ol = hearts.firstElementChild;
   let li = ol.lastElementChild;
   ol.removeChild(li);
-  missed += 1;
+  app.missed += 1;
 }
 
 //check if the game has been won or lost
@@ -99,16 +123,16 @@ const letter = document.querySelectorAll(".letter");
 const checkWin = () => {
   let title = document.querySelector(".title");
   const lettersShown = document.querySelectorAll(".show");
-  let soundtrack = document.getElementById("soundtrack");
+  const soundtrack = document.getElementById("soundtrack");
   if (letter.length === lettersShown.length) {
-    overlay.classList.add("win");
-    overlay.style.display = "flex";
+    app.overlay.classList.add("win");
+    app.overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">CONGRATULATIONS! You've won!</h2>`;
     soundtrack.innerHTML = `<audio autoplay><source src="audio/yay.mp3" type="audio/mpeg"></audio>`;
   }
-  if (missed === 5) {
-    overlay.classList.add("lose");
-    overlay.style.display = "flex";
+  if (app.missed === 5) {
+    app.overlay.classList.add("lose");
+    app.overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">Sorry, you've lost.</h2>`;
     soundtrack.innerHTML = `<audio autoplay><source src="audio/fail.wav" type="audio/wav"></audio>`;
   }
