@@ -3,11 +3,11 @@ const overlay = document.getElementById("overlay");
 const resetBtn = document.getElementsByClassName("btn__reset")[0];
 const phrase = document.getElementById("phrase");
 const phrases = [
-  "A blessing in disguise",
-  "Better late than never",
-  "Your guess is as good as mine",
-  "The best of both worlds",
-  "Like the moon I too have my phases",
+  "A BLESSING IN DISGUISE",
+  "BETTER LATE THAN NEVER",
+  "YOUR GUESS IS AS GOOD AS MINE",
+  "THE BEST OF BOTH WORLDS",
+  "LIKE THE MOON I TOO HAVE MY PHASES",
 ];
 const qwerty = document.getElementById("qwerty");
 let missed = 0;
@@ -33,8 +33,7 @@ const ul = document.querySelector("#phrase ul");
 
 const addPhraseToDisplay = (arr) => {
   phraseLetters.forEach((letter) => {
-    // console.log(letter);
-    const newLi = document.createElement("li"); //how come I can't take newLi and make it a global var?
+    const newLi = document.createElement("li");
     newLi.textContent = letter;
     ul.appendChild(newLi);
 
@@ -113,3 +112,8 @@ const checkWin = () => {
     title.innerHTML = `<h2 class="title">Sorry, you've lost.</h2>`;
   }
 };
+
+// <audio controls autoplay>
+// <source src="GFG.ogg" type="audio/ogg">
+// <source src="GFG.mp3" type="audio/mpeg">
+// </audio>
