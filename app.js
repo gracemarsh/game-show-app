@@ -7,7 +7,7 @@
 //  B) LOSE
 //    I) RESTART => 2
 
-// APP FLOW
+// APP FLOW:
 // 0) SET UP
 function setUp() {
   window.app = {
@@ -26,19 +26,11 @@ function setUp() {
     missed: 0,
   };
 }
-
 setUp();
 
 // 1) START SCREEN
-// 2) GAME
-//  A) WIN
-//    I) RESTART => 2
-//  B) LOSE
-//    I) RESTART => 2
-
 //listen for the start game button to be pressed
 app.resetBtn.addEventListener("click", (e) => {
-  // e.preventDefault();
   app.resetBtn.style.display = "none";
   app.overlay.style.display = "none";
 });
@@ -50,6 +42,8 @@ const getRandomPhraseAsArray = (arr) => {
   return randomPhrase;
 };
 const randomPhrase = getRandomPhraseAsArray(app.phrases);
+
+// 2) GAME
 
 //adds the letters of a string to the display
 const phraseLetters = randomPhrase.split("");
@@ -87,7 +81,6 @@ const checkLetter = (letterGuess) => {
 };
 
 //listen for the onscreen keyboard to be clicked
-// const button = ??
 
 app.qwerty.addEventListener("click", (e) => {
   const button = e.target;
@@ -115,7 +108,6 @@ function displayScore(buttonText) {
   ol.removeChild(li);
   app.missed += 1;
 }
-
 //check if the game has been won or lost
 
 const letter = document.querySelectorAll(".letter");
@@ -129,11 +121,20 @@ const checkWin = () => {
     app.overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">CONGRATULATIONS! You've won!</h2>`;
     soundtrack.innerHTML = `<audio autoplay><source src="audio/yay.mp3" type="audio/mpeg"></audio>`;
+    app.resetBtn.style.display = "block";
+    app.resetBtn.innerHTML = `Play Again?`;
   }
   if (app.missed === 5) {
     app.overlay.classList.add("lose");
     app.overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">Sorry, you've lost.</h2>`;
     soundtrack.innerHTML = `<audio autoplay><source src="audio/fail.wav" type="audio/wav"></audio>`;
+    app.resetBtn.innerHTML = `Try Again?`;
+    app.resetBtn.style.display = "block";
   }
 };
+//  A) WIN
+//    I) RESTART => 2
+
+//  B) LOSE
+//    I) RESTART => 2
