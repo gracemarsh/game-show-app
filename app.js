@@ -96,24 +96,20 @@ function displayScore(buttonText) {
 
 const letter = document.querySelectorAll(".letter");
 
-//win is only happening one click after the actual win...
-//because it's based on qwerty click function
 const checkWin = () => {
   let title = document.querySelector(".title");
   const lettersShown = document.querySelectorAll(".show");
+  let soundtrack = document.getElementById("soundtrack");
   if (letter.length === lettersShown.length) {
     overlay.classList.add("win");
     overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">CONGRATULATIONS! You've won!</h2>`;
+    soundtrack.innerHTML = `<audio autoplay><source src="audio/yay.mp3" type="audio/mpeg"></audio>`;
   }
   if (missed === 5) {
     overlay.classList.add("lose");
     overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">Sorry, you've lost.</h2>`;
+    soundtrack.innerHTML = `<audio autoplay><source src="audio/fail.wav" type="audio/wav"></audio>`;
   }
 };
-
-// <audio controls autoplay>
-// <source src="GFG.ogg" type="audio/ogg">
-// <source src="GFG.mp3" type="audio/mpeg">
-// </audio>
