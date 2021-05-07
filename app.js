@@ -48,7 +48,6 @@ const getRandomPhraseAsArray = (arr) => {
 // 2) GAME
 
 //adds the letters of a string to the display
-
 const addPhraseToDisplay = (arr) => {
   const randomPhrase = getRandomPhraseAsArray(app.phrases);
   const phraseLetters = randomPhrase.split("");
@@ -125,7 +124,6 @@ app.qwerty.addEventListener("click", (e) => {
 //display hearts as lives left
 function displayScore(buttonText) {
   alert(`The letter "${buttonText}" is incorrect, LOSE ONE HEART`);
-  // app.hearts.style.display = "none"; //it's only hiding the last heart once.... not each time!
   app.missed += 1;
   //  ❤️ ❤️ ❤️ ❤️ ❤️
   //  0 1 2 3 4
@@ -150,7 +148,7 @@ const checkWin = () => {
     title.innerHTML = `<h2 class="title">CONGRATULATIONS! You've won!</h2>`;
     soundtrack.innerHTML = `<audio autoplay><source src="audio/yay.mp3" type="audio/mpeg"></audio>`;
     app.resetBtn.style.display = "block";
-    app.resetBtn.innerHTML = `Play Again?`;
+    app.resetBtn.innerHTML = `Play Again`;
   }
   if (app.missed === 5) {
     app.overlay.classList.add("lose");
@@ -162,8 +160,7 @@ const checkWin = () => {
   }
   app.resetBtn.addEventListener("click", (e) => {
     setUp();
-
-    addPhraseToDisplay();
+    reset();
   });
 };
 //  A) WIN
