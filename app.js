@@ -10,6 +10,8 @@
 // APP FLOW:
 // 0) SET UP
 function setUp() {
+  console.log("setUp");
+  //these are set up variables
   window.app = {
     overlay: document.getElementById("overlay"),
     resetBtn: document.getElementsByClassName("btn__reset")[0],
@@ -24,6 +26,8 @@ function setUp() {
     ],
     qwerty: document.getElementById("qwerty"),
     missed: 0,
+    phraseOnDisplay: document.querySelector("#phrase ul"),
+    hearts: document.querySelectorAll("#scoreboard ol li"),
   };
 }
 setUp();
@@ -38,22 +42,21 @@ app.resetBtn.addEventListener("click", (e) => {
 //return a random phrase from an array
 const getRandomPhraseAsArray = (arr) => {
   const randomIndex = Math.floor(Math.random() * app.phrases.length);
-  const randomPhrase = arr[randomIndex];
-  return randomPhrase;
+  return arr[randomIndex];
 };
-const randomPhrase = getRandomPhraseAsArray(app.phrases);
 
 // 2) GAME
 
 //adds the letters of a string to the display
-const phraseLetters = randomPhrase.split("");
-const ul = document.querySelector("#phrase ul");
 
 const addPhraseToDisplay = (arr) => {
+  const randomPhrase = getRandomPhraseAsArray(app.phrases);
+  const phraseLetters = randomPhrase.split("");
+
   phraseLetters.forEach((letter) => {
     const newLi = document.createElement("li");
     newLi.textContent = letter;
-    ul.appendChild(newLi);
+    app.phraseOnDisplay.appendChild(newLi);
 
     if (letter === " ") {
       newLi.classList.add("space");
@@ -62,8 +65,27 @@ const addPhraseToDisplay = (arr) => {
     }
   });
 };
-
 addPhraseToDisplay();
+
+//clear displayed phrase so that new phrase can get displayed & remove classes from keyboard & hearts
+const reset = () => {
+  clearPhrase();
+  addPhraseToDisplay();
+  clearKeyboardClasses();
+  clearHearts();
+};
+
+const clearPhrase = () => {
+  app.phraseOnDisplay.innerHTML = "";
+};
+
+const clearKeyboardClasses = () => {
+  const buttons = document.querySelectorAll("#qwerty .keyrow button");
+  buttons.forEach((button) => (button.classList = ""));
+};
+const clearHearts = () => {
+  app.hearts.forEach((heart) => (heart.style.display = "inline"));
+};
 
 //check if a letter is in the phrase
 const checkLetter = (letterGuess) => {
@@ -100,19 +122,25 @@ app.qwerty.addEventListener("click", (e) => {
   }
 });
 
+//display hearts as lives left
 function displayScore(buttonText) {
   alert(`The letter "${buttonText}" is incorrect, LOSE ONE HEART`);
-  let hearts = document.getElementById("scoreboard");
-  let ol = hearts.firstElementChild;
-  let li = ol.lastElementChild;
-  ol.removeChild(li);
+  // app.hearts.style.display = "none"; //it's only hiding the last heart once.... not each time!
   app.missed += 1;
+  //  ❤️ ❤️ ❤️ ❤️ ❤️
+  //  0 1 2 3 4
+  // missed = 0
+
+  app.hearts.forEach((heart, index) => {
+    if (index < app.missed) {
+      heart.style.display = "none";
+    }
+  });
 }
+
 //check if the game has been won or lost
-
-const letter = document.querySelectorAll(".letter");
-
 const checkWin = () => {
+  const letter = document.querySelectorAll(".letter");
   let title = document.querySelector(".title");
   const lettersShown = document.querySelectorAll(".show");
   const soundtrack = document.getElementById("soundtrack");
@@ -132,6 +160,11 @@ const checkWin = () => {
     app.resetBtn.innerHTML = `Try Again?`;
     app.resetBtn.style.display = "block";
   }
+  app.resetBtn.addEventListener("click", (e) => {
+    setUp();
+
+    addPhraseToDisplay();
+  });
 };
 //  A) WIN
 //    I) RESTART => 2
