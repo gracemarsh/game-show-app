@@ -35,7 +35,7 @@ setUp();
 
 // 1) START SCREEN
 //listen for the start game button to be pressed
-app.resetBtn.addEventListener("click", (e) => {
+app.resetBtn.addEventListener("click", () => {
   app.resetBtn.style.display = "none";
   app.overlay.style.display = "none";
 });
@@ -49,7 +49,7 @@ const getRandomPhraseAsArray = (arr) => {
 // 2) GAME
 
 //adds the letters of a string to the display
-const addPhraseToDisplay = (arr) => {
+const addPhraseToDisplay = () => {
   const randomPhrase = getRandomPhraseAsArray(app.phrases);
   const phraseLetters = randomPhrase.split("");
 
@@ -158,7 +158,7 @@ const checkWin = () => {
     app.resetBtn.innerHTML = `Try Again?`;
     app.resetBtn.style.display = "block";
   }
-  app.resetBtn.addEventListener("click", (e) => {
+  app.resetBtn.addEventListener("click", () => {
     setUp();
     reset();
   });
