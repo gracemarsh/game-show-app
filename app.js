@@ -28,6 +28,7 @@ function setUp() {
     missed: 0,
     phraseOnDisplay: document.querySelector("#phrase ul"),
     hearts: document.querySelectorAll("#scoreboard ol li"),
+    soundtrack: document.getElementById("soundtrack"),
   };
 }
 setUp();
@@ -111,23 +112,23 @@ app.qwerty.addEventListener("click", (e) => {
     let buttonText = button.innerText;
     let match = checkLetter(buttonText);
     button.classList.add("chosen");
-    checkWin();
 
     if (match) {
       button.classList.add("correctButton");
     } else {
+      app.missed += 1;
+      yikesAudio();
       displayScore(buttonText);
     }
+    checkWin();
   }
 });
 
 //display hearts as lives left
 function displayScore(buttonText) {
-  alert(`The letter "${buttonText}" is incorrect, LOSE ONE HEART`);
-  app.missed += 1;
-  //  ❤️ ❤️ ❤️ ❤️ ❤️
-  //  0 1 2 3 4
-  // missed = 0
+  window.setTimeout(() => {
+    alert(`The letter "${buttonText}" is incorrect, LOSE ONE HEART`);
+  }, 170);
 
   app.hearts.forEach((heart, index) => {
     if (index < app.missed) {
@@ -141,12 +142,11 @@ const checkWin = () => {
   const letter = document.querySelectorAll(".letter");
   let title = document.querySelector(".title");
   const lettersShown = document.querySelectorAll(".show");
-  const soundtrack = document.getElementById("soundtrack");
   if (letter.length === lettersShown.length) {
     app.overlay.classList.add("win");
     app.overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">CONGRATULATIONS! You've won!</h2>`;
-    soundtrack.innerHTML = `<audio autoplay><source src="audio/yay.mp3" type="audio/mpeg"></audio>`;
+    yayAudio();
     app.resetBtn.style.display = "block";
     app.resetBtn.innerHTML = `Play Again`;
   }
@@ -154,7 +154,7 @@ const checkWin = () => {
     app.overlay.classList.add("lose");
     app.overlay.style.display = "flex";
     title.innerHTML = `<h2 class="title">Sorry, you've lost.</h2>`;
-    soundtrack.innerHTML = `<audio autoplay><source src="audio/fail.wav" type="audio/wav"></audio>`;
+    failAudio();
     app.resetBtn.innerHTML = `Try Again?`;
     app.resetBtn.style.display = "block";
   }
@@ -163,8 +163,12 @@ const checkWin = () => {
     reset();
   });
 };
-//  A) WIN
-//    I) RESTART => 2
 
-//  B) LOSE
-//    I) RESTART => 2
+//add audio to different parts of the gameshow
+const addAudio = (source, type) => {
+  app.soundtrack.innerHTML = `<audio autoplay><source src="audio/${source}" type="audio/${type}"></audio>`;
+};
+
+const yikesAudio = () => addAudio("yikes.wav", "wav");
+const yayAudio = () => addAudio("yay.mp3", "mpeg");
+const failAudio = () => addAudio("fail.wav", "wav");
