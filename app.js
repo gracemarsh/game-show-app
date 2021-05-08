@@ -73,6 +73,7 @@ const reset = () => {
   addPhraseToDisplay();
   clearKeyboardClasses();
   clearHearts();
+  app.overlay.classList = "";
 };
 
 const clearPhrase = () => {
